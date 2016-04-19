@@ -15,6 +15,11 @@ class Main extends Sprite {
 	private var squareSize:Float = 0;
 	private var wallSize:Float = 0;
 	
+	private var leftWall:Sprite;
+	private var leftSquare:Sprite;
+	private var rightWall:Sprite;
+	private var rightSquare:Sprite;
+	
 	private var cube:Sprite;
 	private var size:Float = 32;
 	private var touched:Bool = false;
@@ -64,6 +69,29 @@ class Main extends Sprite {
 		fall();
 	}
 	
+	function next() {
+		squareSize = Random.range(minSize, maxSize);
+		wallSize = Random.range(squareSize+16, squareSize+64);
+		
+		Actuate.tween(leftWall, .5, {x: -wallSize / 2});
+		Actuate.tween(leftSquare, .5, {x: -squareSize / 2});
+		Actuate.tween(rightWall, .5, {x: (stage.stageWidth + wallSize) / 2});
+		Actuate.tween(rightSquare, .5, {x: (stage.stageWidth + squareSize) / 2});
+		
+		Actuate.tween(cube, .5, {y: 100, scaleX: 32 / size, scaleY: 32 / size}).onComplete(function() {
+			cube.scaleX = cube.scaleY = 1;
+			cube.graphics.clear();
+			cube.graphics.beginFill(0xffffff);
+			cube.graphics.drawRect( -16, -16, 32, 32);
+			cube.graphics.endFill();
+		});
+		
+		size = 32;
+		
+		falling = false;
+		score++;
+	}
+	
 	function fall() {
 		falling = true;
 		Actuate.tween(cube, .5, {rotation: 0});
@@ -76,42 +104,45 @@ class Main extends Sprite {
 			yy = stage.stageHeight + size;
 		}
 		Actuate.tween(cube, .5, {y: yy}).delay(.5);
+		Actuate.timer(2).delay(1).onComplete(function() {next(); });
 	}
 	
 	function createWallsAndSquares():Void {
-		var bg:Shape = new Shape();
+		var bg:Sprite = new Sprite();
 		bg.graphics.beginFill(0xff8080);
 		bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
 		bg.graphics.endFill();
 		addChild(bg);
 		
-		var leftSquare:Shape = new Shape();
+		leftSquare= new Sprite();
+		leftSquare.x = -squareSize / 2;
 		leftSquare.y = stage.height - 100;
 		leftSquare.graphics.beginFill(0xffffff);
-		leftSquare.graphics.drawRect(0, 0, (stage.stageWidth - squareSize) / 2, 100);
+		leftSquare.graphics.drawRect(0, 0, 160, 100);
 		leftSquare.graphics.endFill();
 		addChild(leftSquare);
 		
-		var leftWall:Shape = new Shape();
+		leftWall = new Sprite();
+		leftWall.x = -wallSize / 2;
 		leftWall.y = stage.height - 150;
 		leftWall.graphics.beginFill(0xffffff);
-		leftWall.graphics.drawRect(0, 0, (stage.stageWidth - wallSize) / 2, 50);
+		leftWall.graphics.drawRect(0, 0, 160, 50);
 		leftWall.graphics.endFill();
 		addChild(leftWall);
 		
-		var rightSquare:Shape = new Shape();
+		rightSquare = new Sprite();
 		rightSquare.x = (stage.stageWidth + squareSize) / 2;
 		rightSquare.y = stage.height - 100;
 		rightSquare.graphics.beginFill(0xffffff);
-		rightSquare.graphics.drawRect(0, 0, (stage.stageWidth - squareSize) / 2, 100);
+		rightSquare.graphics.drawRect(0, 0, 160, 100);
 		rightSquare.graphics.endFill();
 		addChild(rightSquare);
 		
-		var rightWall:Shape = new Shape();
+		rightWall = new Sprite();
 		rightWall.x = (stage.stageWidth + wallSize) / 2;
 		rightWall.y = stage.height - 150;
 		rightWall.graphics.beginFill(0xffffff);
-		rightWall.graphics.drawRect(0, 0, (stage.stageWidth - wallSize) / 2, 50);
+		rightWall.graphics.drawRect(0, 0, 160, 50);
 		rightWall.graphics.endFill();
 		addChild(rightWall);
 	}

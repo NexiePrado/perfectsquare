@@ -91,7 +91,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "41",
+			build: "49",
 			company: "Company Name",
 			file: "PerfectSquare",
 			fps: 30,
