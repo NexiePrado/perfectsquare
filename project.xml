@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	
+	<meta title="PerfectSquare" package="com.sample.perfectsquare" version="1.0.0" company="Company Name" />
+	<app main="Main" path="Export" file="PerfectSquare" />
+	
+	<window width="320" height="480" if="flash" />
+	
+	<source path="Source" />
+	
+	<haxelib name="openfl" />
+	<haxelib name="actuate" />
+	
+	<assets path="Assets" rename="assets" />
+	
+</project>
