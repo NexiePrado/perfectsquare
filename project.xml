@@ -10,7 +10,8 @@
 	
 	<haxelib name="openfl" />
 	<haxelib name="actuate" />
+	<haxelib name="bitmapFont" />
 	
-	<assets path="Assets" rename="assets" />
+	<assets path="Assets/fonts" rename="fonts" />
 	
 </project>
